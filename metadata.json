@@ -20,8 +20,10 @@
     "dataset_url": "https://share.services.ai4os.eu/index.php/apps/files/?dir=/EOSC_runs/data&fileid=4289691",
     "sources": {
 		"source_code": "https://dashboard.cloud.ai4eosc.eu/marketplace/modules/thunderstorm-nowcast-microstep",
+                "dockerfile_repo": "https://github.com/ai4os-hub/thunderstorm-nowcast-microstep",
+                "docker_registry_repo": "ai4oshub/thunderstorm-nowcast-microstep"
                 "docker_image": "ai4oshub/thunderstorm-nowcast-microstep",
-                "weights": "https://github.com/MicroStep-MIS/thunderstorm-nowcast-microstep/tree/main/data/raw/model.h5",
+                "weights": "https://github.com/ai4os-hub/thunderstorm-nowcast-microstep/tree/main/data/raw/model.h5",
                 "ai4_template": "ai4-template/2.0.0"
 	},
     "continuous_integration": {
