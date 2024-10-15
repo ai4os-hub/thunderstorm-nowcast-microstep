@@ -1,10 +1,10 @@
 model_parameters:
     nn_layer:
       - name: Conv1D
-        other_settings: 5, (3, ) 
+        other_settings: 5, (1, ) 
         activation: "'relu'"
         kernel_initializer: "'he_uniform'"
-        input_shape: '(39, 4, 1)' #len(data_X[0])
+        input_shape: '(3, 2, 1)' #'(39, 1)' #len(data_X[0])
 
       #- name: MaxPooling2D
       #  other_settings: '(2, 2)'
@@ -17,8 +17,8 @@ model_parameters:
         kernel_initializer: "'he_uniform'"
 
       - name: Dense
-        other_settings: '52' # '13' #len(data_Y[0])
-        activation: "'sigmoid'"  #"'softsign'"
+        other_settings: '2' #'13' #len(data_Y[0])
+        activation:  "'sigmoid'"  #"'softsign'"
 
     optimizer:
         name: 'SGD'
@@ -27,13 +27,13 @@ model_parameters:
 
     model_compile:
         optimizer: ''
-        loss: "'binary_crossentropy'"  # "'categorical_crossentropy'"
-        metrics: "['binary_accuracy']"
+        loss: "'binary_crossentropy'"
+        metrics: "['accuracy']"
 
 train_model_settings:
     n_folds: 5
-    epochs: 10
+    epochs: 50 #20 #10
     batch_size: 32
-    output_neurons: 13
-    num_classes: 4
-    class_weight: {0: 1., 1: 1., 2: 1., 3: 1.}
+    output_neurons: 1
+    num_classes: 2
+    class_weight: {0: 1., 1: 10000.}

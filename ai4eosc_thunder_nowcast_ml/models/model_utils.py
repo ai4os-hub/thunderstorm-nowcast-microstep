@@ -225,6 +225,7 @@ def train_model(dataX, dataY, parameters):
         batch_size = parameters["train_model_settings"]["batch_size"]
         output_neurons = parameters["train_model_settings"]["output_neurons"]
         num_classes = parameters["train_model_settings"]["num_classes"]
+        class_weight = parameters["train_model_settings"]["class_weight"]
         scores, histories, models = list(), list(), list()
 
         kfold = KFold(n_folds, shuffle=True, random_state=1)  # prepare cross validation
@@ -256,6 +257,7 @@ def train_model(dataX, dataY, parameters):
                 trainY,
                 epochs=epochs,  # fit model
                 batch_size=batch_size,
+                class_weight=class_weight,
                 validation_data=(testX, testY),
                 verbose=0,
             )

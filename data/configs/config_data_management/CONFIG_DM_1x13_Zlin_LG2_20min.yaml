@@ -1,0 +1,38 @@
+input_data_d1: ('cotrec', 'persistence')
+input_data_d2: ('titan',)
+input_data_sources: ('cappi2000', 'vil')
+measurements: 'measurements'
+time_tolerance: 60000  # in milliseconds
+forecast_time: 20  # in minutes
+threshold_value: '((9,), (0, 1))' # first list - threshold values, second list - classes
+use_columns: '("timestamp", "forecast")'
+train:
+    seasons:
+      - years: '(2016, 2017, 2018)'
+        months: '()'
+        days: '()'
+test:
+    seasons:
+      - years: '(2019, 2020)'
+        months: '()'
+        days: '()'
+validate:
+    seasons:
+      - years: '(2019, 2020)'
+        months: '()'
+        days: '()'
+
+dataset:
+  - AREA_list: '("AREA1",)'
+  - AREA_list: '("AREA2",)'
+  - AREA_list: '("AREA3",)'
+  - AREA_list: '("AREA4",)'
+  - AREA_list: '("AREA5",)'
+  - AREA_list: '("AREA6",)'
+  - AREA_list: '("AREA7",)'
+  - AREA_list: '("AREA8",)'
+  - AREA_list: '("AREA9",)'
+  - AREA_list: '("AREA10",)'
+  - AREA_list: '("AREA11",)'
+  - AREA_list: '("AREA12",)'
+  - AREA_list: '("AREA13",)'
