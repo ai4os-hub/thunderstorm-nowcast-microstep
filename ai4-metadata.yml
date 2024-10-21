@@ -21,7 +21,7 @@ dates:
   created: '2023-07-01'
   updated: '2024-10-01'
 links:
-  source_code: https://dashboard.cloud.ai4eosc.eu/marketplace/modules/thunderstorm-nowcast-microstep
+  source_code: https://github.com/ai4os-hub/thunderstorm-nowcast-microstep
   docker_image: ai4oshub/thunderstorm-nowcast-microstep
   weights: https://github.com/MicroStep-MIS/thunderstorm-nowcast-microstep/tree/main/data/raw/model.h5
   ai4_template: ai4-template/1.9.9
