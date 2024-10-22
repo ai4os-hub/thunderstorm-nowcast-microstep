@@ -3,8 +3,10 @@ title: Thunderstorm nowcast (MicroStep-MIS)
 summary: Thunderstorm nowcast based on radar data (for agrometeorology)
 description: |-
   ai4eosc_thunder_nowcast_ml is an application using the DEEPaaS API.
-  Write additional information for your users (how to predict, how to retrain, dataset description, training description, etc).  
+  Write additional information for your users (how to predict, how to retrain, dataset description, training description, etc).
+
   <img class='fit', src='https://raw.githubusercontent.com/ai4os-hub/thunderstorm-nowcast-microstep/main/docs/images/radar.png'/>
+  
   **Training the deep learning model(s)**
   abc1
   
