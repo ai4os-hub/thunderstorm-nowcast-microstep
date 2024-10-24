@@ -3,21 +3,24 @@ title: Thunderstorm nowcast (MicroStep-MIS)
 summary: Thunderstorm nowcast based on radar data (for agrometeorology)
 description: |-
   ai4eosc_thunder_nowcast_ml is an application using the DEEPaaS API.
-  Write additional information for your users (how to predict, how to retrain, dataset description, training description, etc).
 
+#**Training the deep learning model(s)**
+  In project is needed software preprocessed [tabular radar data](https://github.com/ai4os-hub/thunderstorm-nowcast-microstep/tree/main/data/examples) 
+  for training and predict severe convective rain. The main goal is to send warning messages to farmers.
+  
   <img class='fit', src='https://raw.githubusercontent.com/ai4os-hub/thunderstorm-nowcast-microstep/main/docs/images/radar.png'/>
+
+  Algorithm needs CAPPI2000 and VIL (vertical integrated liquid water) radar products for AREAs - city and its close surrounding.
+  The both processes of train and predict are fully [configurable](https://github.com/ai4os-hub/thunderstorm-nowcast-microstep/tree/main/data/configs).
+  You can specify Neural network architecture, forecast time, which Areas include, forecast time, etc. However, you have set same configuration for
+  prediction as was set during training.
+
+#**Data**
   
-  **Training the deep learning model(s)**
-  abc1
+#**Inference**
   
-  **Data**
-  abc2
-  
-  **Inference**
-  abc3
-  
-  **References**
-  abc4
+#**References**
+
   
 dates:
   created: '2023-07-01'
