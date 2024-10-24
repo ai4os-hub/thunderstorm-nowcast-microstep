@@ -4,7 +4,7 @@ summary: Thunderstorm nowcast based on radar data (for agrometeorology)
 description: |-
   ai4eosc_thunder_nowcast_ml is an application using the DEEPaaS API.
 
-#**Training the deep learning model(s)**
+  #**Training the deep learning model(s)**
   In project is needed software preprocessed [tabular radar data](https://github.com/ai4os-hub/thunderstorm-nowcast-microstep/tree/main/data/examples) 
   for training and predict severe convective rain. The main goal is to send warning messages to farmers.
   
@@ -15,12 +15,10 @@ description: |-
   You can specify Neural network architecture, forecast time, which Areas include, forecast time, etc. However, you have set same configuration for
   prediction as was set during training.
 
+#**Training the deep learning model(s)**
 #**Data**
-  
 #**Inference**
-  
 #**References**
-
   
 dates:
   created: '2023-07-01'
