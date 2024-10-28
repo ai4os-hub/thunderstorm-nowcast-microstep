@@ -10,7 +10,7 @@ description: |-
   
   <img class='fit', src='https://raw.githubusercontent.com/ai4os-hub/thunderstorm-nowcast-microstep/main/docs/images/radar.png'/>
 
-  Algorithm needs CAPPI2000 and VIL (vertical integrated liquid water) radar products for AREAs - city and its close surrounding.
+  Algorithm needs CAPPI2000 and VIL (vertical integrated liquid water) radar products for AREAs - local districts.
   The both processes of train and predict are fully [configurable](https://github.com/ai4os-hub/thunderstorm-nowcast-microstep/tree/main/data/configs).
   You can specify Neural network architecture, forecast time, which Areas include, forecast time, etc. However, you have set same configuration for
   prediction as was set during training.
