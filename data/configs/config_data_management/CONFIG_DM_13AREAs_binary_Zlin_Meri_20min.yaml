@@ -3,8 +3,8 @@ input_data_d2: ('titan',)
 input_data_sources: ('cappi2000', 'vil')
 measurements: 'measurements'
 time_tolerance: 60000  # in milliseconds
-forecast_time: 40  # in minutes
-threshold_value: '((17,), (0, 1))' # first list - threshold values, second list - classes
+forecast_time: 20  # in minutes
+threshold_value: '((10,), (0, 1))' # first list - threshold values, second list - classes
 use_columns: '("timestamp", "forecast")'
 train:
     seasons:

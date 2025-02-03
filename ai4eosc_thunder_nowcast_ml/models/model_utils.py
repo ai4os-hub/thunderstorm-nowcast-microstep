@@ -16,6 +16,7 @@ from keras.layers import MaxPooling2D
 from keras.layers import Dense
 from keras.layers import Flatten
 from keras.optimizers import SGD
+import keras
 from .. import config as cfg
 from .. import config_layout as cly
 from datetime import datetime

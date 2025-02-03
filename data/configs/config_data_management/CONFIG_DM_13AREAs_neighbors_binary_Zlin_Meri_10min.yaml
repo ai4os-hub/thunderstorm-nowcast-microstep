@@ -1,0 +1,43 @@
+input_data_d1: ('cotrec', 'persistence')
+input_data_d2: ('titan',)
+input_data_sources: ('cappi2000', 'vil')
+measurements: 'measurements'
+time_tolerance: 60000  # in milliseconds
+forecast_time: 10  # in minutes
+threshold_value: '((10,), (0, 1))' # first list - threshold values, second list - classes
+use_columns: '("timestamp", "forecast")'
+train:
+    seasons:
+      - years: '(2016, 2017, 2018)'
+        months: '()'
+        days: '()'
+test:
+    seasons:
+      - years: '(2019, 2020)'
+        months: '()'
+        days: '()'
+validate:
+    seasons:
+      - years: '(2019, 2020)'
+        months: '()'
+        days: '()'
+predict:
+    seasons:
+      - years: '(2016, 2017, 2018)'
+        months: '()'
+        days: '()'
+
+dataset:
+  - AREA_list: '("AREA1", "AREA115", "AREA13", "AREA2", "AREA10")'
+  - AREA_list: '("AREA2", "AREA135", "AREA13", "AREA3", "AREA1")'
+  - AREA_list: '("AREA3", "AREA135", "AREA7", "AREA107", "AREA2")'
+  - AREA_list: '("AREA4", "AREA13", "AREA8", "AREA7", "AREA9")'
+  - AREA_list: '("AREA5", "AREA2", "AREA7", "AREA3", "AREA13")'
+  - AREA_list: '("AREA6", "AREA109", "AREA12", "AREA10", "AREA111")'
+  - AREA_list: '("AREA7", "AREA5", "AREA144", "AREA124", "AREA8")'
+  - AREA_list: '("AREA8", "AREA4", "AREA210", "AREA7", "AREA219")'
+  - AREA_list: '("AREA9", "AREA12", "AREA219", "AREA4", "AREA204")'
+  - AREA_list: '("AREA10", "AREA128", "AREA12", "AREA1", "AREA6")'
+  - AREA_list: '("AREA11", "AREA12", "AREA4", "AREA13", "AREA9")'
+  - AREA_list: '("AREA12", "AREA10", "AREA9", "AREA11", "AREA215")'
+  - AREA_list: '("AREA13", "AREA1", "AREA4", "AREA5", "AREA11")'
