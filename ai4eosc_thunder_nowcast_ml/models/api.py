@@ -26,7 +26,7 @@ from keras.utils import to_categorical
 from aiohttp.web import HTTPBadRequest
 from functools import wraps
 
-# Authorization 
+# Authorization
 # from flaat import Flaat
 # flaat = Flaat()
 

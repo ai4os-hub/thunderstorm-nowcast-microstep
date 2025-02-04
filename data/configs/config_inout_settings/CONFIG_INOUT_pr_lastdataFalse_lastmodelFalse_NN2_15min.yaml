@@ -1,6 +1,6 @@
 data_source: server  # 'server' or 'nextcloud'
 send_outputs_to: server  # 'server' or 'nextcloud' or 'swagger'
-path_out: ../vystup
+path_out: ./outputs
 output_name: Prediction_15min
 use_last_data: False
 use_last_model: False
