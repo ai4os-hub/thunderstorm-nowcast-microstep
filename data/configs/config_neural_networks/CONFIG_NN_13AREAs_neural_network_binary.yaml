@@ -17,7 +17,7 @@ model_parameters:
         kernel_initializer: "'he_uniform'"
 
       - name: Dense
-        other_settings: '26' #len(data_Y[0])
+        other_settings: '4'  # '26' #len(data_Y[0])
         activation: "'sigmoid'"  #"'softsign'"
 
     optimizer:
@@ -34,6 +34,6 @@ train_model_settings:
     n_folds: 5
     epochs: 80
     batch_size: 32
-    output_neurons: 13
+    output_neurons: 2  # 13
     num_classes: 2
     class_weight: {0: 1., 1: 1.}

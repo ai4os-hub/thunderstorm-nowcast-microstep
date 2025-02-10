@@ -27,7 +27,7 @@ predict:
         months: '()'
         days: '()'
 
-dataset:
+dataset_input:
   - AREA_list: '("AREA1", "AREA115", "AREA13", "AREA2", "AREA10")'
   - AREA_list: '("AREA2", "AREA135", "AREA13", "AREA3", "AREA1")'
   - AREA_list: '("AREA3", "AREA135", "AREA7", "AREA107", "AREA2")'
@@ -41,3 +41,18 @@ dataset:
   - AREA_list: '("AREA11", "AREA12", "AREA4", "AREA13", "AREA9")'
   - AREA_list: '("AREA12", "AREA10", "AREA9", "AREA11", "AREA215")'
   - AREA_list: '("AREA13", "AREA1", "AREA4", "AREA5", "AREA11")'
+
+dataset_output:
+  - AREA_list: '("AREA1",)'
+  - AREA_list: '("AREA2",)'
+  - AREA_list: '("AREA3",)'
+  - AREA_list: '("AREA4",)'
+  - AREA_list: '("AREA5",)'
+  - AREA_list: '("AREA6",)'
+  - AREA_list: '("AREA7",)'
+  - AREA_list: '("AREA8",)'
+  - AREA_list: '("AREA9",)'
+  - AREA_list: '("AREA10",)'
+  - AREA_list: '("AREA11",)'
+  - AREA_list: '("AREA12",)'
+  - AREA_list: '("AREA13",)'

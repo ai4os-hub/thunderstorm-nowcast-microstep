@@ -22,5 +22,9 @@ validate:
         months: '()'
         days: '()'
 
-dataset:
+dataset_input:
   - AREA_list: '("AREA1","AREA2","AREA3","AREA4","AREA5","AREA6","AREA7","AREA8","AREA9","AREA10","AREA11","AREA12","AREA13")'
+
+dataset_output:
+  - AREA_list: '("AREA1","AREA2","AREA3","AREA4","AREA5","AREA6","AREA7","AREA8","AREA9","AREA10","AREA11","AREA12","AREA13")'
+  
