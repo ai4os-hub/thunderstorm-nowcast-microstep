@@ -14,6 +14,7 @@ import numpy as np
 import os
 import sys
 import shutil
+import base64
 import pandas as pd
 # import project's config.py
 from .. import config as cfg
@@ -387,6 +388,10 @@ def predict(**kwargs):
 
     def _make_zipfile(source_dir, output_filename):
         shutil.make_archive(output_filename, 'zip', source_dir)
+        with open(output_filename, "rb") as f:
+            bytes = f.read()
+            encoded = base64.b64encode(bytes)
+        return encoded
 
     def _on_return(**kwargs):
         print_log("predict: _on_return")
@@ -405,7 +410,8 @@ def predict(**kwargs):
         if ino_pr["send_outputs_to"] == "swagger" or kwargs["accept"] == "application/zip":
             print_log(f"open({output_dir_name}.zip, 'rb', buffering=0)", log_file=None)
             return open(output_dir_name + ".zip", 'rb', buffering=0)
-            # if kwargs["accept"] == "application/json":
+        if ino_pr["json"] or kwargs["accept"] == "application/json":
+            return message
             #     return open(output_dir_name + ".zip", 'rb', buffering=0)
             # elif kwargs["accept"] == "application/zip":
             #     return open(output_dir_name + ".zip", 'rb', buffering=0)
@@ -654,6 +660,10 @@ def train(**kwargs):
 
     def _make_zipfile(source_dir, output_filename):
         shutil.make_archive(output_filename, 'zip', source_dir)
+        with open(output_filename, "rb") as f:
+            bytes = f.read()
+            encoded = base64.b64encode(bytes)
+        return encoded
 
     def _on_return(**kwargs):
         date_suffix = ""
@@ -671,6 +681,8 @@ def train(**kwargs):
         if ino_tr["send_outputs_to"] == "swagger" or kwargs["accept"] == "application/zip":
             print_log(f"open({output_dir_name}.zip, 'rb', buffering=0)", log_file=None)
             return open(output_dir_name + ".zip", 'rb', buffering=0)
+        if ino_tr["json"] or kwargs["accept"] == "application/json":
+            return message
 
     def _write_mlflow_metrics(stats_key, s):
         tmp = stat.unlist_all(stats_key)
