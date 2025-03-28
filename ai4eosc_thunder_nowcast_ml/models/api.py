@@ -433,7 +433,23 @@ def predict(**kwargs):
         name_ino_pr = set_kwargs("select_ino_pr", **kwargs)
         name_usr_pr = set_kwargs("select_usr_pr", **kwargs)
         new_config_file_name = set_kwargs("cfg_file_pr", **kwargs)
-
+        
+        print("")
+        print(f"cfg.file_list_dtm == {cfg.file_list_dtm}")
+        print(f"cfg.config_names_dtm == {cfg.config_names_dtm}")
+        print("")
+        print(f"cfg.file_list_mlo == {cfg.file_list_mlo}")
+        print(f"cfg.config_names_mlo == {cfg.config_names_mlo}")
+        print("")
+        print(f"cfg.file_list_nnw == {cfg.file_list_nnw}")
+        print(f"cfg.config_names_nnw == {cfg.config_names_nnw}")
+        print("")
+        print(f"cfg.file_list_ino == {cfg.file_list_ino}")
+        print(f"cfg.config_names_ino == {cfg.config_names_ino}")
+        print("")
+        print(f"cfg.file_list_usr == {cfg.file_list_usr}")
+        print(f"cfg.config_names_usr == {cfg.config_names_usr}")
+        print("")
         config_dtm_pr_path = cfg.file_list_dtm[cfg.config_names_dtm.index(name_dtm_pr)]
         config_mlo_pr_path = cfg.file_list_mlo[cfg.config_names_mlo.index(name_mlo_pr)]
         config_nnw_pr_path = cfg.file_list_nnw[cfg.config_names_nnw.index(name_nnw_pr)]
