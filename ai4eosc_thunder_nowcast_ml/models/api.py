@@ -519,6 +519,8 @@ def predict(**kwargs):
         send_to = ""
         if ino_pr["send_outputs_to"] == "nextcloud":
             send_to = cly.NEXTCLOUD
+        elif ino_pr["send_outputs_to"] == "json" or ino_pr["send_outputs_to"] == "server":
+            send_to = cly.BASE_DIR
 
         if ino_pr["path_out"] == "":
             save_dir = cly.WORK_SAVE_DIR
