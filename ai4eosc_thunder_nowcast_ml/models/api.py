@@ -594,6 +594,9 @@ def predict(**kwargs):
             targz_data_path = os.path.join(data_source, ino_pr["targz_data_path"])
             targz_data_name = os.path.basename(targz_data_path)
         print("19")
+        print_log(f"os.getcwd() == {os.getcwd}")
+        print_log(f"os.path.isfile(targz_data_path) == {os.path.isfile(targz_data_path)}")
+        print_log(f"os.path.isfile(os.path.join(cly.RAW_DATA_DIR, targz_data_name)) == {os.path.isfile(os.path.join(cly.RAW_DATA_DIR, targz_data_name))}")
         print_log(f"shutil.copy({targz_data_path}, os.path.join({cly.RAW_DATA_DIR}, {targz_data_name}))")
         shutil.copy(targz_data_path, os.path.join(cly.RAW_DATA_DIR, targz_data_name))
 
