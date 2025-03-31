@@ -566,7 +566,7 @@ def predict(**kwargs):
         # data source
         print("10")
         if ino_pr["data_source"] == "server":
-            data_source = ""
+            data_source = cly.BASE_DIR  #""
             print("11")
         elif ino_pr["data_source"] == "nextcloud":
             data_source = cly.NEXTCLOUD_DATA_DIR
