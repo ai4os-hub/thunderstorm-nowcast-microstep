@@ -382,9 +382,12 @@ def predict(**kwargs):
 
     def _before_return():
         print_log("predict: _before_return")
-        # move log file
-        print_log(f"shutil.move({cly.LOG_FILE_PATH}, {output_dir_name}/log_file.txt)")
-        shutil.move(cly.LOG_FILE_PATH, output_dir_name + "/log_file.txt")
+        try:
+            # move log file
+            print_log(f"shutil.move({cly.LOG_FILE_PATH}, {output_dir_name}/log_file.txt)")
+            shutil.move(cly.LOG_FILE_PATH, output_dir_name + "/log_file.txt")
+        except Exception as err:
+            print_log(f"{cly.LOG_FILE_PATH} not found, err == {err}")
 
     def _make_zipfile(source_dir, output_filename):
         shutil.make_archive(output_filename, 'zip', source_dir)
@@ -433,7 +436,7 @@ def predict(**kwargs):
         name_ino_pr = set_kwargs("select_ino_pr", **kwargs)
         name_usr_pr = set_kwargs("select_usr_pr", **kwargs)
         new_config_file_name = set_kwargs("cfg_file_pr", **kwargs)
-        
+
         print("")
         print(f"cfg.file_list_dtm == {cfg.file_list_dtm}")
         print(f"cfg.config_names_dtm == {cfg.config_names_dtm}")
@@ -451,10 +454,15 @@ def predict(**kwargs):
         print(f"cfg.config_names_usr == {cfg.config_names_usr}")
         print("")
         config_dtm_pr_path = cfg.file_list_dtm[cfg.config_names_dtm.index(name_dtm_pr)]
+        print(f"config_dtm_pr_path == {config_dtm_pr_path}")
         config_mlo_pr_path = cfg.file_list_mlo[cfg.config_names_mlo.index(name_mlo_pr)]
+        print(f"config_mlo_pr_path == {config_mlo_pr_path}")
         config_nnw_pr_path = cfg.file_list_nnw[cfg.config_names_nnw.index(name_nnw_pr)]
+        print(f"config_nnw_pr_path == {config_nnw_pr_path}")
         config_ino_pr_path = cfg.file_list_ino[cfg.config_names_ino.index(name_ino_pr)]
+        print(f"config_ino_pr_path == {config_ino_pr_path}")
         config_usr_pr_path = cfg.file_list_usr[cfg.config_names_usr.index(name_usr_pr)]
+        print(f"config_usr_pr_path == {config_usr_pr_path}")
 
         # print inputs
         print_log(f"option_pr == {option_pr}")
