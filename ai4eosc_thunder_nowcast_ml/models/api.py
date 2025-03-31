@@ -517,18 +517,23 @@ def predict(**kwargs):
 
         # prepare output_name and deleted directories
         send_to = ""
+        print_log(f"send_to == {send_to}")
+        print_log(f"ino_pr['send_outputs_to'] == {ino_pr['send_outputs_to']}")
         if ino_pr["send_outputs_to"] == "nextcloud":
             send_to = cly.NEXTCLOUD
         elif ino_pr["send_outputs_to"] == "json" or ino_pr["send_outputs_to"] == "server":
             send_to = cly.BASE_DIR
+        print_log(f"send_to == {send_to}")
 
         if ino_pr["path_out"] == "":
             save_dir = cly.WORK_SAVE_DIR
         else:
             save_dir = os.path.join(send_to, ino_pr["path_out"])
+        print_log(f"save_dir == {save_dir}")
 
         print("1")
         output_dir_name = os.path.join(save_dir, ino_pr["output_name"])
+        print_log(f"output_dir_name == {output_dir_name}")
         print("2")
         if os.path.isdir(output_dir_name) is True:
             print("3")
@@ -536,6 +541,7 @@ def predict(**kwargs):
         print("4")
         print_log(f"os.makedirs({output_dir_name}, exist_ok=True)")
         os.makedirs(output_dir_name, exist_ok=True)
+        print_log(f"output_dir_name == {output_dir_name}")
 
         # return default config files
         print("5")
