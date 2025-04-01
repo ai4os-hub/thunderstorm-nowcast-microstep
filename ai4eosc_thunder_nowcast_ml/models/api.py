@@ -405,7 +405,8 @@ def predict(**kwargs):
         # make tar.gz file
         print_log(f"os.path.isfile(output_dir_name) == {os.path.isfile(output_dir_name)}")
         print_log(f"_make_zipfile({output_dir_name}, {output_dir_name}{date_suffix}.zip)", log_file=None)
-        _make_zipfile(output_dir_name, output_dir_name + date_suffix)
+        msg = _make_zipfile(output_dir_name, output_dir_name + date_suffix)
+        message["output"] = msg
         print_log("OK", log_file=None)
         # send to nextcloud or on gui
         if ino_pr["send_outputs_to"] == "nextcloud":
@@ -422,7 +423,8 @@ def predict(**kwargs):
             #     return open(output_dir_name + ".zip", 'rb', buffering=0)
 
     message = {"status": "ok",
-               "training": []}
+               "predict": [],
+               "output": ""}
 
     try:
         # prepare log file
@@ -544,6 +546,7 @@ def predict(**kwargs):
         print_log(f"os.makedirs({output_dir_name}, exist_ok=True)")
         os.makedirs(output_dir_name, exist_ok=True)
         print_log(f"output_dir_name == {output_dir_name}")
+        print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
 
         # return default config files
         print("5")
@@ -576,7 +579,7 @@ def predict(**kwargs):
         # data source
         print("10")
         if ino_pr["data_source"] == "server":
-            data_source = cly.BASE_DIR  #""
+            data_source = cly.BASE_DIR  # ""
             print("11")
         elif ino_pr["data_source"] == "nextcloud":
             data_source = cly.NEXTCLOUD_DATA_DIR
@@ -636,6 +639,7 @@ def predict(**kwargs):
         # copy data to output directory
         # filename must have same name as default!!!
         print_log("Copy default configs to output directory")
+        print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
         print("27")
         try_copy(config_nnw_pr_path, output_dir_name)
         print("28")
@@ -656,6 +660,7 @@ def predict(**kwargs):
         # load model
         print("32")
         print_log("Load model")
+        print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
         modelLoad, model_response_header = mutils.load_model(os.path.join(output_dir_name, model_hdf5_name),
                                                              nnw_pr, True)
         print_log(f"model_response_header == {model_response_header}")
@@ -664,6 +669,7 @@ def predict(**kwargs):
         print_log("Make prediction on test data")
         prediction_pr = mutils.test_model(modelLoad, nnw_pr, dataPredictX, [])
         print("33")
+        print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
         print_log(f"mutils.append_new_column_to_csv({cly.PREDICT_FILE}, \
                  {os.path.join(output_dir_name, prediction_outfilename)}, \
                  [prediction_pr, ], [{model_response_header}, ])")
@@ -672,7 +678,9 @@ def predict(**kwargs):
 
         # return output
         print("34")
+        print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
         _before_return()
+        print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
         return _on_return(**kwargs)
 
     except Exception as err:
