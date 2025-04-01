@@ -409,6 +409,7 @@ def predict(**kwargs):
         print_log(f"_make_zipfile({output_dir_name}, {output_dir_name}{date_suffix}.zip)", log_file=None)
         msg = _make_zipfile(output_dir_name, output_dir_name + date_suffix)
         message["output"] = msg
+        print_log(f"message['output'] == {message['output']}")
         print_log("OK", log_file=None)
         # send to nextcloud or on gui
         if ino_pr["send_outputs_to"] == "nextcloud":
@@ -418,7 +419,7 @@ def predict(**kwargs):
         if ino_pr["send_outputs_to"] == "swagger" or kwargs["accept"] == "application/zip":
             print_log(f"open({output_dir_name}.zip, 'rb', buffering=0)", log_file=None)
             return open(output_dir_name + ".zip", 'rb', buffering=0)
-        if ino_pr["json"] or kwargs["accept"] == "application/json":
+        if ino_pr["send_outputs_to"] == "json" or kwargs["accept"] == "application/json":
             return message
             #     return open(output_dir_name + ".zip", 'rb', buffering=0)
             # elif kwargs["accept"] == "application/zip":
