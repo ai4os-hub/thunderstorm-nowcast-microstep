@@ -393,8 +393,8 @@ def predict(**kwargs):
         print_log(f"shutil.make_archive({output_filename}, 'zip', base_dir={source_dir})")
         shutil.make_archive(output_filename, 'zip', base_dir=source_dir)
         print_log(f"output_filename == {output_filename}")
-        print_log(f"os.path.isfile({output_filename}) == {output_filename}")
-        with open(output_filename, "rb") as f:
+        print_log(f"os.path.isfile({output_filename + '.zip'}) == {os.path.isfile(output_filename + '.zip')}")
+        with open(output_filename + '.zip', "rb") as f:
             bytes = f.read()
             encoded = base64.b64encode(bytes)
         return encoded
