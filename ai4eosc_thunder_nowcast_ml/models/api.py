@@ -390,8 +390,10 @@ def predict(**kwargs):
             print_log(f"{cly.LOG_FILE_PATH} not found, err == {err}")
 
     def _make_zipfile(source_dir, output_filename):
-        print_log(f"shutil.make_archive({output_filename}, 'zip', {source_dir})")
-        shutil.make_archive(output_filename, 'zip', source_dir)
+        print_log(f"shutil.make_archive({output_filename}, 'zip', base_dir={source_dir})")
+        shutil.make_archive(output_filename, 'zip', base_dir=source_dir)
+        print_log(f"output_filename == {output_filename}")
+        print_log(f"os.path.isfile({output_filename}) == {output_filename}")
         with open(output_filename, "rb") as f:
             bytes = f.read()
             encoded = base64.b64encode(bytes)
@@ -403,7 +405,7 @@ def predict(**kwargs):
         if os.path.isdir(output_dir_name):
             date_suffix = "_" + datetime.datetime.now().strftime("_%Y%m%d_%H%M%S")
         # make tar.gz file
-        print_log(f"os.path.isfile(output_dir_name) == {os.path.isfile(output_dir_name)}")
+        print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
         print_log(f"_make_zipfile({output_dir_name}, {output_dir_name}{date_suffix}.zip)", log_file=None)
         msg = _make_zipfile(output_dir_name, output_dir_name + date_suffix)
         message["output"] = msg
