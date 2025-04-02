@@ -167,6 +167,8 @@ def set_kwargs(argument, arg2=None, **kwargs):
         return set_string_argument("select_usr_pr", "", **kwargs)
     elif argument == "cfg_file_pr":
         return set_file_argument("cfg_file_pr", "", **kwargs)
+    elif argument == "input_file_base64_pr":
+        return set_string_argument("input_data_file", "", **kwargs)
     # train
     elif argument == "select_dtm_tr":
         return set_string_argument("select_dtm_tr", "", **kwargs)
@@ -443,6 +445,7 @@ def predict(**kwargs):
         name_ino_pr = set_kwargs("select_ino_pr", **kwargs)
         name_usr_pr = set_kwargs("select_usr_pr", **kwargs)
         new_config_file_name = set_kwargs("cfg_file_pr", **kwargs)
+        input_file_base64_pr = set_kwargs("input_data_file", **kwargs)
 
         print("")
         print(f"cfg.file_list_dtm == {cfg.file_list_dtm}")
@@ -609,6 +612,16 @@ def predict(**kwargs):
             print("18")
             targz_data_path = os.path.join(data_source, ino_pr["targz_data_path"])
             targz_data_name = os.path.basename(targz_data_path)
+        if input_file_base64_pr != "":
+            print("18")
+            targz_data_path = os.path.join(cly.RAW_DATA_DIR, "tmp_input.tar.gz")
+            targz_data_name = os.path.basename(targz_data_path)
+            print("18.1")
+            b = base64.b64decode(input_file_base64_pr)
+            print("18.2")
+            with open(targz_data_path, 'wb') as f:
+                f.write(b)
+            print("18.3")
         print("19")
         print_log(f"os.getcwd() == {os.getcwd}")
         print_log(f"os.path.isfile(targz_data_path) == {os.path.isfile(targz_data_path)}")
