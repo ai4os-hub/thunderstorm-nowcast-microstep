@@ -616,7 +616,7 @@ def predict(**kwargs):
         if input_file_base64_pr != "":
             print(input_file_base64_pr)
             print("18")
-            targz_data_path = os.path.join(cly.RAW_DATA_DIR, "tmp_input.tar.gz")
+            targz_data_path = os.path.join(cly.DOWNLOADS_TMP_DIR, "tmp_input.tar.gz")
             targz_data_name = os.path.basename(targz_data_path)
             print("18.1")
             b = base64.b64decode(input_file_base64_pr)
@@ -625,7 +625,6 @@ def predict(**kwargs):
                 f.write(b)
             print("18.3")
         print("19")
-        print_log(f"os.getcwd() == {os.getcwd}")
         print_log(f"os.path.isfile(targz_data_path) == {os.path.isfile(targz_data_path)}")
         print_log(f"os.path.isfile(os.path.join(cly.RAW_DATA_DIR, targz_data_name)) == {os.path.isfile(os.path.join(cly.RAW_DATA_DIR, targz_data_name))}")
         print_log(f"shutil.copy({targz_data_path}, os.path.join({cly.RAW_DATA_DIR}, {targz_data_name}))")
