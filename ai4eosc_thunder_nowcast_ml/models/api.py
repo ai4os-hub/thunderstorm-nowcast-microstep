@@ -613,6 +613,7 @@ def predict(**kwargs):
             targz_data_path = os.path.join(data_source, ino_pr["targz_data_path"])
             targz_data_name = os.path.basename(targz_data_path)
         if input_file_base64_pr != "":
+            print(input_file_base64_pr)
             print("18")
             targz_data_path = os.path.join(cly.RAW_DATA_DIR, "tmp_input.tar.gz")
             targz_data_name = os.path.basename(targz_data_path)

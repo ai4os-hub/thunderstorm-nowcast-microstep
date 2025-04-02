@@ -125,6 +125,10 @@ class PredictArgsSchema(Schema):
         description="Choose MLflow user config file"
     )
 
+    input_data_file = fields.String(
+        required=False, missing=None, description="Use input files send by user"
+    )
+
     # cfg_file_pr = fields.Field(
     #     required=False,
     #     missing=None,
