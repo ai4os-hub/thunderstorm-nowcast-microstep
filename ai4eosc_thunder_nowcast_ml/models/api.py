@@ -167,7 +167,7 @@ def set_kwargs(argument, arg2=None, **kwargs):
         return set_string_argument("select_usr_pr", "", **kwargs)
     elif argument == "cfg_file_pr":
         return set_file_argument("cfg_file_pr", "", **kwargs)
-    elif argument == "input_file_base64_pr":
+    elif argument == "input_data_file":
         return set_string_argument("input_data_file", "", **kwargs)
     # train
     elif argument == "select_dtm_tr":
@@ -487,6 +487,7 @@ def predict(**kwargs):
         print_log(f"config_nnw_pr_path == {config_nnw_pr_path}")
         print_log(f"config_ino_pr_path == {config_ino_pr_path}")
         print_log(f"config_usr_pr_path == {config_usr_pr_path}")
+        print_log(f"input_file_base64_pr == {input_file_base64_pr}")
 
         if option_pr not in ["Prediction", "Get all config files"]:
             cfg_file_pr = set_kwargs("cfg_file_pr", **kwargs)
