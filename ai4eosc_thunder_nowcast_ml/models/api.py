@@ -447,22 +447,6 @@ def predict(**kwargs):
         new_config_file_name = set_kwargs("cfg_file_pr", **kwargs)
         input_file_base64_pr = set_kwargs("input_data_file", **kwargs)
 
-        print("")
-        print(f"cfg.file_list_dtm == {cfg.file_list_dtm}")
-        print(f"cfg.config_names_dtm == {cfg.config_names_dtm}")
-        print("")
-        print(f"cfg.file_list_mlo == {cfg.file_list_mlo}")
-        print(f"cfg.config_names_mlo == {cfg.config_names_mlo}")
-        print("")
-        print(f"cfg.file_list_nnw == {cfg.file_list_nnw}")
-        print(f"cfg.config_names_nnw == {cfg.config_names_nnw}")
-        print("")
-        print(f"cfg.file_list_ino == {cfg.file_list_ino}")
-        print(f"cfg.config_names_ino == {cfg.config_names_ino}")
-        print("")
-        print(f"cfg.file_list_usr == {cfg.file_list_usr}")
-        print(f"cfg.config_names_usr == {cfg.config_names_usr}")
-        print("")
         config_dtm_pr_path = cfg.file_list_dtm[cfg.config_names_dtm.index(name_dtm_pr)]
         print(f"config_dtm_pr_path == {config_dtm_pr_path}")
         config_mlo_pr_path = cfg.file_list_mlo[cfg.config_names_mlo.index(name_mlo_pr)]
@@ -528,7 +512,6 @@ def predict(**kwargs):
 
         # prepare output_name and deleted directories
         send_to = ""
-        print_log(f"send_to == {send_to}")
         print_log(f"ino_pr['send_outputs_to'] == {ino_pr['send_outputs_to']}")
         if ino_pr["send_outputs_to"] == "nextcloud":
             send_to = cly.NEXTCLOUD
@@ -542,35 +525,26 @@ def predict(**kwargs):
             save_dir = os.path.join(send_to, ino_pr["path_out"])
         print_log(f"save_dir == {save_dir}")
 
-        print("1")
         output_dir_name = os.path.join(save_dir, ino_pr["output_name"])
         print_log(f"output_dir_name == {output_dir_name}")
-        print("2")
         if os.path.isdir(output_dir_name) is True:
-            print("3")
             output_dir_name = output_dir_name + datetime.datetime.now().strftime("_%Y%m%d_%H%M%S")
-        print("4")
         print_log(f"os.makedirs({output_dir_name}, exist_ok=True)")
         os.makedirs(output_dir_name, exist_ok=True)
         print_log(f"output_dir_name == {output_dir_name}")
         print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
 
         # return default config files
-        print("5")
         if option_pr == "Get all config files":
             for tp in [cfg.file_list_dtm, cfg.file_list_mlo, cfg.file_list_nnw,
                        cfg.file_list_ino, cfg.file_list_usr]:
-                print("6")
                 for fl in tp:
-                    print("7")
                     print_log(f"shutil.copy({fl}, {output_dir_name})")
                     shutil.copy(fl, output_dir_name)
-            print("8")
             _before_return()
             return _on_return(**kwargs)
 
         # clean directories
-        print("9")
         if ino_pr["use_last_data"] is False:
             print_log(f"mutils.delete_old_files({cly.WORKING_DATA_DIR}, .csv)")
             mutils.delete_old_files(cly.WORKING_DATA_DIR, ".csv")
@@ -584,71 +558,49 @@ def predict(**kwargs):
             mutils.delete_old_files(cly.VALIDATION_DIR, ".csv")
 
         # data source
-        print("10")
         if ino_pr["data_source"] == "server":
             data_source = cly.BASE_DIR  # ""
-            print("11")
         elif ino_pr["data_source"] == "nextcloud":
             data_source = cly.NEXTCLOUD_DATA_DIR
-            print("12")
 
         # set hdf5 file path
-        print("13")
         if ino_pr["model_hdf5"] == "":
-            print("14")
             model_hdf5_path = cly.DEFAULT_MODEL_HDF5_PATH
             model_hdf5_name = cly.DEFAULT_MODEL_HDF5_FILENAME
         else:
-            print("15")
             model_hdf5_path = os.path.join(data_source, ino_pr["model_hdf5"])
             model_hdf5_name = os.path.basename(model_hdf5_path)
 
         # set targz path
-        print("16")
         if ino_pr["targz_data_path"] == "":
-            print("17")
             targz_data_path = cly.DEFAULT_DATA_TARGZ_PATH
             targz_data_name = cly.DEFAULT_DATA_TARGZ_FILENAME
         else:
-            print("18")
             targz_data_path = os.path.join(data_source, ino_pr["targz_data_path"])
             targz_data_name = os.path.basename(targz_data_path)
         if input_file_base64_pr != "":
-            print(input_file_base64_pr)
-            print("18")
             targz_data_path = os.path.join(cly.DOWNLOADS_TMP_DIR, "tmp_input.tar.gz")
             targz_data_name = os.path.basename(targz_data_path)
-            print("18.1")
             b = base64.b64decode(input_file_base64_pr)
-            print("18.2")
             with open(targz_data_path, 'wb') as f:
                 f.write(b)
-            print("18.3")
-        print("19")
         print_log(f"os.path.isfile(targz_data_path) == {os.path.isfile(targz_data_path)}")
         print_log(f"os.path.isfile(os.path.join(cly.RAW_DATA_DIR, targz_data_name)) == {os.path.isfile(os.path.join(cly.RAW_DATA_DIR, targz_data_name))}")
         print_log(f"shutil.copy({targz_data_path}, os.path.join({cly.RAW_DATA_DIR}, {targz_data_name}))")
         shutil.copy(targz_data_path, os.path.join(cly.RAW_DATA_DIR, targz_data_name))
 
         if ino_pr["prediction_outfilename"] == "":
-            print("20")
             prediction_outfilename = cly.PREDICTION_OUTFILENAME
         else:
-            print("21")
             prediction_outfilename = ino_pr["prediction_outfilename"]
 
-        print("22")
         print_log(f"tar = tarfile.open(os.path.join({cly.RAW_DATA_DIR}, {targz_data_name}), mode='r:gz')")
-        print("23")
         tar = tarfile.open(os.path.join(cly.RAW_DATA_DIR, targz_data_name), mode='r:gz')
-        print("24")
         for member in tar.getmembers():
-            print("25")
             print_log(f"tar.extract(member, {cly.RAW_DATA_DIR})")
             tar.extract(member, cly.RAW_DATA_DIR)
         print_log("tar.close()")
         tar.close()
-        print("26")
 
         print_log(f"os.path.join({cly.RAW_DATA_DIR}, {targz_data_name})")
         os.remove(os.path.join(cly.RAW_DATA_DIR, targz_data_name))
@@ -657,17 +609,12 @@ def predict(**kwargs):
         # filename must have same name as default!!!
         print_log("Copy default configs to output directory")
         print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
-        print("27")
         try_copy(config_nnw_pr_path, output_dir_name)
-        print("28")
         try_copy(config_dtm_pr_path, output_dir_name)
-        print("29")
         try_copy(model_hdf5_path, output_dir_name)
-        print("30")
 
         # make dataset
         if ino_pr["use_last_data"] is False:
-            print("31")
             print_log(f"prepare_data_predict({cly.RAW_DATA_DIR},{cly.WORKING_DATA_DIR},{cly.PREDICT_FILE},dtm_pr)")
             bf.prepare_data_predict(cly.RAW_DATA_DIR, cly.WORKING_DATA_DIR, cly.PREDICT_FILE, dtm_pr)
 
@@ -675,7 +622,6 @@ def predict(**kwargs):
         dataPredictX, dataPredictY, dprXcols, dprYcols = mutils.make_dataset(cly.PREDICT_FILE, dtm_pr)
 
         # load model
-        print("32")
         print_log("Load model")
         print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
         modelLoad, model_response_header = mutils.load_model(os.path.join(output_dir_name, model_hdf5_name),
@@ -685,7 +631,6 @@ def predict(**kwargs):
         # make prediction
         print_log("Make prediction on test data")
         prediction_pr = mutils.test_model(modelLoad, nnw_pr, dataPredictX, [])
-        print("33")
         print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
         print_log(f"mutils.append_new_column_to_csv({cly.PREDICT_FILE}, \
                  {os.path.join(output_dir_name, prediction_outfilename)}, \
@@ -694,7 +639,6 @@ def predict(**kwargs):
                                         [prediction_pr, ], [model_response_header, ])
 
         # return output
-        print("34")
         print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
         _before_return()
         print_log(f"os.path.isdir({output_dir_name}) == {os.path.isdir(output_dir_name)}")
