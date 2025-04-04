@@ -398,8 +398,8 @@ def predict(**kwargs):
         print_log(f"os.path.isfile({output_filename + '.zip'}) == {os.path.isfile(output_filename + '.zip')}")
         with open(output_filename + '.zip', "rb") as f:
             bytes = f.read()
-            encoded = base64.b64encode(bytes)
-        return encoded
+            encoded_to_ascii = base64.b64encode(bytes).decode("ascii")
+        return encoded_to_ascii
 
     def _on_return(**kwargs):
         print_log("predict: _on_return")
