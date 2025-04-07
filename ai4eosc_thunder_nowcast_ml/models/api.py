@@ -13,6 +13,7 @@ import numpy as np
 
 import os
 import sys
+import csv
 import shutil
 import base64
 import pandas as pd
@@ -36,24 +37,25 @@ def currentFuncName(n=0):
     return sys._getframe(n + 1).f_code.co_name
 
 
-def print_log(log_line, verbose=True, time_stamp=True, log_file=cly.LOG_FILE_PATH):
+def print_log(log_line, verbose=False, time_stamp=True, log_file=cly.LOG_FILE_PATH):
     tm = ""
     if time_stamp:
         tm = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S: ")
-    if verbose:
-        if log_file is None:
+    if log_file is None:
+        if verbose:
             print(tm + log_line)
-        else:
+    else:
+        if verbose:
             print(tm + log_line)
             print(f"os.makedirs(os.path.dirname({log_file}), exist_ok=True)")
-            os.makedirs(os.path.dirname(log_file), exist_ok=True)
-            try:
-                with open(log_file, 'a') as file:
-                    file.write(tm + log_line + "\n")
-            except Exception as err:
-                print(f"Missing log file: {err}")
-                f = open(log_file, "w")
-                f.close()
+        os.makedirs(os.path.dirname(log_file), exist_ok=True)
+        try:
+            with open(log_file, 'a') as file:
+                file.write(tm + log_line + "\n")
+        except Exception as err:
+            print(f"Missing log file: {err}")
+            f = open(log_file, "w")
+            f.close()
 
 
 def _catch_error(f):
@@ -195,7 +197,7 @@ def get_metadata():
     # module = ["py"]
 
     # prepare log file
-    print(f"os.makedirs(os.path.dirname({cly.LOG_FILE_PATH}), exist_ok=True)")
+    print_log(f"os.makedirs(os.path.dirname({cly.LOG_FILE_PATH}), exist_ok=True)")
     os.makedirs(os.path.dirname(cly.LOG_FILE_PATH), exist_ok=True)
     f = open(cly.LOG_FILE_PATH, "w")
     f.close()
@@ -396,10 +398,18 @@ def predict(**kwargs):
         shutil.make_archive(output_filename, 'zip', base_dir=source_dir)
         print_log(f"output_filename == {output_filename}")
         print_log(f"os.path.isfile({output_filename + '.zip'}) == {os.path.isfile(output_filename + '.zip')}")
-        with open(output_filename + '.zip', "rb") as f:
-            bytes = f.read()
-            encoded_to_ascii = base64.b64encode(bytes).decode("ascii")
-        return encoded_to_ascii
+        # with open(output_filename + '.zip', "rb") as f:
+        #     bytes = f.read()
+        #     encoded_to_ascii = base64.b64encode(bytes).decode("ascii")
+        # return encoded_to_ascii
+        output_csv = os.path.join(source_dir, ino_pr["prediction_outfilename"])
+        msg = {}
+        with open(output_csv) as out_csv:
+            csv_file_data = csv.DictReader(out_csv)
+            msg["output_"] = []
+            for row_data in csv_file_data:
+                msg["output_"].append(row_data)
+        return msg
 
     def _on_return(**kwargs):
         print_log("predict: _on_return")
@@ -448,15 +458,15 @@ def predict(**kwargs):
         input_file_base64_pr = set_kwargs("input_data_file", **kwargs)
 
         config_dtm_pr_path = cfg.file_list_dtm[cfg.config_names_dtm.index(name_dtm_pr)]
-        print(f"config_dtm_pr_path == {config_dtm_pr_path}")
+        print_log(f"config_dtm_pr_path == {config_dtm_pr_path}")
         config_mlo_pr_path = cfg.file_list_mlo[cfg.config_names_mlo.index(name_mlo_pr)]
-        print(f"config_mlo_pr_path == {config_mlo_pr_path}")
+        print_log(f"config_mlo_pr_path == {config_mlo_pr_path}")
         config_nnw_pr_path = cfg.file_list_nnw[cfg.config_names_nnw.index(name_nnw_pr)]
-        print(f"config_nnw_pr_path == {config_nnw_pr_path}")
+        print_log(f"config_nnw_pr_path == {config_nnw_pr_path}")
         config_ino_pr_path = cfg.file_list_ino[cfg.config_names_ino.index(name_ino_pr)]
-        print(f"config_ino_pr_path == {config_ino_pr_path}")
+        print_log(f"config_ino_pr_path == {config_ino_pr_path}")
         config_usr_pr_path = cfg.file_list_usr[cfg.config_names_usr.index(name_usr_pr)]
-        print(f"config_usr_pr_path == {config_usr_pr_path}")
+        print_log(f"config_usr_pr_path == {config_usr_pr_path}")
 
         # print inputs
         print_log(f"option_pr == {option_pr}")

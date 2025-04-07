@@ -26,17 +26,18 @@ def currentFuncName(n=0):
     return sys._getframe(n + 1).f_code.co_name
 
 
-def print_log(log_line, verbose=True, time_stamp=True, log_file=cly.LOG_FILE_PATH):
+def print_log(log_line, verbose=False, time_stamp=True, log_file=cly.LOG_FILE_PATH):
     tm = ""
     if time_stamp:
         tm = datetime.now().strftime("%Y-%m-%d %H:%M:%S: ")
-    if verbose:
-        if log_file is None:
+    if log_file is None:
+        if verbose:
             print(tm + log_line)
-        else:
+    else:
+        if verbose:
             print(tm + log_line)
-            with open(log_file, 'a') as file:
-                file.write(tm + log_line + "\n")
+        with open(log_file, 'a') as file:
+            file.write(tm + log_line + "\n")
 
 
 def mount_nextcloud(nextCloudUser="DEEP_IAM-41539aaf-8a57-4a53-9707-26c77f635c69",

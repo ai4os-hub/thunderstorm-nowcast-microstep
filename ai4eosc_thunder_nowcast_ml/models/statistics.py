@@ -13,13 +13,14 @@ def print_log(log_line, verbose=True, time_stamp=True, log_file=cly.LOG_FILE_PAT
     tm = ""
     if time_stamp:
         tm = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S: ")
-    if verbose:
-        if log_file is None:
+    if log_file is None:
+        if verbose:
             print(tm + log_line)
-        else:
+    else:
+        if verbose:
             print(tm + log_line)
-            with open(log_file, 'a') as file:
-                file.write(tm + log_line + "\n")
+        with open(log_file, 'a') as file:
+            file.write(tm + log_line + "\n")
 
 
 def unlist(x):

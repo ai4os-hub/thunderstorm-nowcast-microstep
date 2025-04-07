@@ -4,10 +4,26 @@
 """
 
 import os
+from datetime import datetime
 from webargs import fields, validate
 from marshmallow import Schema, INCLUDE
 # from datetime import datetime
 from . import config_layout as cly
+
+
+def print_log(log_line, verbose=False, time_stamp=True, log_file=cly.LOG_FILE_PATH):
+    tm = ""
+    if time_stamp:
+        tm = datetime.now().strftime("%Y-%m-%d %H:%M:%S: ")
+    if log_file is None:
+        if verbose:
+            print(tm + log_line)
+    else:
+        if verbose:
+            print(tm + log_line)
+        with open(log_file, 'a') as file:
+            file.write(tm + log_line + "\n")
+
 
 # default location for input and output data, e.g. directories 'data' and 'models',
 # is either set relative to the application path or via environment setting
@@ -20,7 +36,7 @@ if 'APP_INPUT_OUTPUT_BASE_DIR' in os.environ:
         msg = "[WARNING] \"APP_INPUT_OUTPUT_BASE_DIR="
         msg = msg + "{}\" is not a valid directory! ".format(env_in_out_base_dir)
         msg = msg + "Using \"BASE_DIR={}\" instead.".format(cly.BASE_DIR)
-        print(msg)
+        print_log(msg)
 
 
 def get_config_file_list(config_name, config_name_prefix, src_name=""):
@@ -35,7 +51,7 @@ def get_config_file_list(config_name, config_name_prefix, src_name=""):
                 name = x.split(config_name_prefix, 1)[1]
                 config_names.append(src_name + os.path.splitext(name)[0])
     except FileNotFoundError:
-        print(f"There is no proper config file in {config_name} directory")
+        print_log(f"There is no proper config file in {config_name} directory")
     # if len(file_list) == 0:
     #     file_list = ["---"]
     #     config_names = ["---"]
