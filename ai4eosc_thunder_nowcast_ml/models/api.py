@@ -13,7 +13,7 @@ import numpy as np
 
 import os
 import sys
-import csv
+# import csv
 import shutil
 import base64
 import pandas as pd
@@ -404,11 +404,15 @@ def predict(**kwargs):
         # return encoded_to_ascii
         output_csv = os.path.join(source_dir, ino_pr["prediction_outfilename"])
         msg = {}
+        # with open(output_csv) as out_csv:
+        #     csv_file_data = csv.DictReader(out_csv)
+        #     msg["output_"] = []
+        #     for row_data in csv_file_data:
+        #         msg["output_"].append(row_data)
         with open(output_csv) as out_csv:
-            csv_file_data = csv.DictReader(out_csv)
-            msg["output_"] = []
-            for row_data in csv_file_data:
-                msg["output_"].append(row_data)
+            msg["output"] = []
+            for row_data in out_csv:
+                msg["output"].append(row_data.rstrip('\n').split(","))
         return msg
 
     def _on_return(**kwargs):
@@ -421,7 +425,7 @@ def predict(**kwargs):
         print_log(f"_make_zipfile({output_dir_name}, {output_dir_name}{date_suffix}.zip)", log_file=None)
         msg = _make_zipfile(output_dir_name, output_dir_name + date_suffix)
         message["output"] = msg
-        print_log(f"message['output'] == {message['output']}")
+        print(f"message['output'] == {message['output']}")
         print_log("OK", log_file=None)
         # send to nextcloud or on gui
         if ino_pr["send_outputs_to"] == "nextcloud":
