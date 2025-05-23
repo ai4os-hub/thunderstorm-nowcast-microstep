@@ -592,10 +592,13 @@ def predict(**kwargs):
         else:
             targz_data_path = os.path.join(data_source, ino_pr["targz_data_path"])
             targz_data_name = os.path.basename(targz_data_path)
+        print_log(f'input_file_base64_pr != "": {input_file_base64_pr != ""}')
         if input_file_base64_pr != "":
             targz_data_path = os.path.join(cly.DOWNLOADS_TMP_DIR, "tmp_input.tar.gz")
             targz_data_name = os.path.basename(targz_data_path)
             b = base64.b64decode(input_file_base64_pr)
+            print_log(f"targz_data_path == {targz_data_path}")
+            # print_log(b)
             with open(targz_data_path, 'wb') as f:
                 f.write(b)
         print_log(f"os.path.isfile(targz_data_path) == {os.path.isfile(targz_data_path)}")
