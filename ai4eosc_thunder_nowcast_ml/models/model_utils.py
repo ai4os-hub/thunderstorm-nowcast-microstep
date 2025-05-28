@@ -5,6 +5,7 @@ import os
 # import yaml
 import numpy as np
 import pandas as pd
+import shutil
 import sys
 import ast
 import h5py
@@ -113,11 +114,18 @@ def delete_old_files(dir_path, file_extension=".csv"):
     try:
         print_log(f"running {currentFuncName()}")
         if os.path.isdir(dir_path):
-            for fl in os.listdir(dir_path):
-                file_path = os.path.join(dir_path, fl)
-                if os.path.isfile(file_path) and os.path.splitext(fl)[1] == file_extension:
-                    print_log(f"{currentFuncName()}: os.remove({file_path})")
-                    os.remove(file_path)
+            if file_extension == "all":
+                print_log(f"shutil.rmtree({dir_path})")
+                shutil.rmtree(dir_path)
+                if not os.path.exists(dir_path):
+                    print_log(f"os.makedirs({dir_path})")
+                    os.makedirs(dir_path)
+            else:
+                for fl in os.listdir(dir_path):
+                    file_path = os.path.join(dir_path, fl)
+                    if os.path.isfile(file_path) and os.path.splitext(fl)[1] == file_extension:
+                        print_log(f"{currentFuncName()}: os.remove({file_path})")
+                        os.remove(file_path)
         else:
             print_log(f"{currentFuncName()}: Error: path == {dir_path} is not directory")
     except Exception as err:

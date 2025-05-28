@@ -562,14 +562,14 @@ def predict(**kwargs):
         if ino_pr["use_last_data"] is False:
             print_log(f"mutils.delete_old_files({cly.WORKING_DATA_DIR}, .csv)")
             mutils.delete_old_files(cly.WORKING_DATA_DIR, ".csv")
-            print_log(f"mutils.delete_old_files({cly.RAW_DATA_DIR}, .csv)")
-            mutils.delete_old_files(cly.RAW_DATA_DIR, ".csv")
-            print_log(f"mutils.delete_old_files({cly.TRAIN_DIR}, .csv)")
-            mutils.delete_old_files(cly.TRAIN_DIR, ".csv")
-            print_log(f"mutils.delete_old_files({cly.TEST_DIR}, .csv)")
-            mutils.delete_old_files(cly.TEST_DIR, ".csv")
-            print_log(f"mutils.delete_old_files({cly.VALIDATION_DIR}, .csv)")
-            mutils.delete_old_files(cly.VALIDATION_DIR, ".csv")
+            print_log(f"mutils.delete_old_files({cly.RAW_DATA_DIR}, all)")
+            mutils.delete_old_files(cly.RAW_DATA_DIR, "all")
+            print_log(f"mutils.delete_old_files({cly.TRAIN_DIR}, all)")
+            mutils.delete_old_files(cly.TRAIN_DIR, "all")
+            print_log(f"mutils.delete_old_files({cly.TEST_DIR}, all)")
+            mutils.delete_old_files(cly.TEST_DIR, "all")
+            print_log(f"mutils.delete_old_files({cly.VALIDATION_DIR}, all)")
+            mutils.delete_old_files(cly.VALIDATION_DIR, "all")
 
         # data source
         if ino_pr["data_source"] == "server":
@@ -793,14 +793,14 @@ def train(**kwargs):
         if ino_tr["use_last_data"] is False:
             print_log(f"mutils.delete_old_files({cly.WORKING_DATA_DIR}, .csv)")
             mutils.delete_old_files(cly.WORKING_DATA_DIR, ".csv")
-            print_log(f"mutils.delete_old_files({cly.RAW_DATA_DIR}, .csv)")
-            mutils.delete_old_files(cly.RAW_DATA_DIR, ".csv")
-            print_log(f"mutils.delete_old_files({cly.TRAIN_DIR}, .csv)")
-            mutils.delete_old_files(cly.TRAIN_DIR, ".csv")
-            print_log(f"mutils.delete_old_files({cly.TEST_DIR}, .csv)")
-            mutils.delete_old_files(cly.TEST_DIR, ".csv")
-            print_log(f"mutils.delete_old_files({cly.VALIDATION_DIR}, .csv)")
-            mutils.delete_old_files(cly.VALIDATION_DIR, ".csv")
+            print_log(f"mutils.delete_old_files({cly.RAW_DATA_DIR}, all)")
+            mutils.delete_old_files(cly.RAW_DATA_DIR, "all")
+            print_log(f"mutils.delete_old_files({cly.TRAIN_DIR}, all)")
+            mutils.delete_old_files(cly.TRAIN_DIR, "all")
+            print_log(f"mutils.delete_old_files({cly.TEST_DIR}, all)")
+            mutils.delete_old_files(cly.TEST_DIR, "all")
+            print_log(f"mutils.delete_old_files({cly.VALIDATION_DIR}, all)")
+            mutils.delete_old_files(cly.VALIDATION_DIR, "all")
 
         # data source
         if ino_tr["data_source"] == "server":
