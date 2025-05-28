@@ -20,6 +20,8 @@ flaat~=1.1.1
 
 mlflow
 
+shutil
+
 # The following was suggested by the migration.sh script #
 # Versions are taken from the relevant docker image #
 #
