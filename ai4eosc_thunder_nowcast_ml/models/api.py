@@ -569,7 +569,7 @@ def predict(**kwargs):
             mutils.delete_old_files(cly.RAW_DATA_DIR, "all")
             print_log(f"mutils.delete_old_files({cly.TRAIN_DIR}, all)")
             mutils.delete_old_files(cly.TRAIN_DIR, "all")
-            print_log(f"mutils.delete_old_files({cly.TEST_DIR}, all) ")
+            print_log(f"mutils.delete_old_files({cly.TEST_DIR}, all)")
             mutils.delete_old_files(cly.TEST_DIR, "all")
             print_log(f"mutils.delete_old_files({cly.VALIDATION_DIR}, all)")
             mutils.delete_old_files(cly.VALIDATION_DIR, "all")
