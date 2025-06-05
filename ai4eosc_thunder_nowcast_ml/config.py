@@ -147,7 +147,7 @@ class PredictArgsSchema(Schema):
 
     # cfg_file_pr = fields.Field(
     #     required=False,
-    #     missing=None,
+    #     missing="",
     #     type="file",
     #     data_key="cfg_file",
     #     location="form",
@@ -155,7 +155,7 @@ class PredictArgsSchema(Schema):
     # )
 
     new_config_file_name = fields.String(
-        required=False, missing=None, description="Set new config file name"
+        required=False, missing="", description="Set new config file name"
     )
 
     accept = fields.Str(

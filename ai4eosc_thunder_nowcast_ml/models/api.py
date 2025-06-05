@@ -37,7 +37,7 @@ def currentFuncName(n=0):
     return sys._getframe(n + 1).f_code.co_name
 
 
-def print_log(log_line, verbose=False, time_stamp=True, log_file=cly.LOG_FILE_PATH):
+def print_log(log_line, verbose=True, time_stamp=True, log_file=cly.LOG_FILE_PATH):
     tm = ""
     if time_stamp:
         tm = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S: ")
@@ -137,6 +137,7 @@ def set_file_argument(arg_name, arg_default_value, **kwargs):
         if kwargs[arg_name]:
             kwargs[arg_name] = [kwargs[arg_name]]
             for fl in kwargs[arg_name]:
+                print_log(f"fl == {fl}")
                 filename = fl.filename
             print_log(f"{currentFuncName()}: filesize {os.path.getsize(filename)}")
             if os.path.getsize(filename) <= 2:
@@ -167,6 +168,8 @@ def set_kwargs(argument, arg2=None, **kwargs):
         return set_string_argument("select_ino_pr", "", **kwargs)
     elif argument == "select_usr_pr":
         return set_string_argument("select_usr_pr", "", **kwargs)
+    elif argument == "new_config_file_name":
+        return set_string_argument("new_config_file_name", "", **kwargs)
     elif argument == "cfg_file_pr":
         return set_file_argument("cfg_file_pr", "", **kwargs)
     elif argument == "input_data_file":
@@ -458,7 +461,7 @@ def predict(**kwargs):
         name_nnw_pr = set_kwargs("select_nnw_pr", **kwargs)
         name_ino_pr = set_kwargs("select_ino_pr", **kwargs)
         name_usr_pr = set_kwargs("select_usr_pr", **kwargs)
-        new_config_file_name = set_kwargs("cfg_file_pr", **kwargs)
+        new_config_file_name = set_kwargs("new_config_file_name", **kwargs)  # set_kwargs("cfg_file_pr", **kwargs)
         input_file_base64_pr = set_kwargs("input_data_file", **kwargs)
 
         config_dtm_pr_path = cfg.file_list_dtm[cfg.config_names_dtm.index(name_dtm_pr)]
