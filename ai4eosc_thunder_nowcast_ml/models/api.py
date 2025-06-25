@@ -604,8 +604,8 @@ def predict(**kwargs):
             # print_log(b)
             with open(targz_data_path, 'wb') as f:
                 f.write(b)
-        print_log(f"os.path.isfile(targz_data_path) == {os.path.isfile(targz_data_path)}")
-        print_log(f"os.path.isfile(os.path.join(cly.RAW_DATA_DIR, targz_data_name)) == {os.path.isfile(os.path.join(cly.RAW_DATA_DIR, targz_data_name))}")
+        print_log(f"os.path.isfile({targz_data_path}) == {os.path.isfile(targz_data_path)}")
+        print_log(f"os.path.isfile({os.path.join(cly.RAW_DATA_DIR, targz_data_name)}) == {os.path.isfile(os.path.join(cly.RAW_DATA_DIR, targz_data_name))}")
         print_log(f"shutil.copy({targz_data_path}, os.path.join({cly.RAW_DATA_DIR}, {targz_data_name}))")
         shutil.copy(targz_data_path, os.path.join(cly.RAW_DATA_DIR, targz_data_name))
 

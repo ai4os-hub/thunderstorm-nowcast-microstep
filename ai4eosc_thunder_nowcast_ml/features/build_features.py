@@ -50,6 +50,7 @@ def csv_data_to_one_file(source_path, dest_path, use_columns, forecast_time=None
     try:
         print_log(f"running {currentFuncName()}")
         print_log(f"source_path == {source_path}")
+        print_log(f"dest_path == {dest_path}")
         data_files = os.listdir(source_path)
         data_files = [f for f in data_files if os.path.isfile(source_path + '/' + f)]
         df_csv_append = pd.DataFrame()
@@ -79,6 +80,17 @@ def csv_data_to_one_file(source_path, dest_path, use_columns, forecast_time=None
                 df_csv_append.to_csv(dest_path, index=False)
         else:
             print_log(f"{currentFuncName()}: Warning: len(df_csv_append) == 0")
+            print_log(f"df_csv_append == {df_csv_append}")
+            new_row = pd.DataFrame([np.zeros(len(df_csv_append.columns), dtype=np.int32)], columns=df_csv_append.columns)
+            df_csv_append = pd.concat([df_csv_append, new_row], ignore_index=True)
+            print_log(f"df_csv_append == {df_csv_append}")
+            if os.path.isfile(dest_path):
+                print_log(f"{currentFuncName()}: df_csv_append.to_csv({dest_path},mode='a',index=False,header=False)")
+                df_csv_append.to_csv(dest_path, mode='a', index=False, header=False)
+            else:
+                print_log(f"{currentFuncName()}: df_csv_append.to_csv({dest_path}, index=False)")
+                df_csv_append.to_csv(dest_path, index=False)
+
     except Exception as err:
         print_log(f"{currentFuncName()}: Unexpected {err=}, {type(err)=}")
 
@@ -90,8 +102,12 @@ def make_raw_csv_data(source_path, dest_path, data_sources, file_types, use_colu
             data_sources = (data_sources,)
         if not isinstance(file_types, list) and not isinstance(file_types, tuple):
             file_types = (file_types,)
+        print_log(f"use_columns == {use_columns}")
+        print_log(f"forecas_time == {forecast_time}")
         for ds in data_sources:
             for ft in file_types:
+                print_log(f"data source (ds) == {ds}")
+                print_log(f"file type (ft) == {ft}")
                 csv_data_to_one_file(source_path + "/" + ds + "/" + ft,
                                      dest_path + "/" + ds + "__" + ft + ".csv",
                                      use_columns, forecast_time)
@@ -107,7 +123,10 @@ def load_csv_files(source_path_list, config_yaml, header_list, nan_to_zero=True)
         output_df = list()
         output_header = list()
         j = 0
+        print_log(f"source_path_list == {source_path_list}")
         for i in range(len(source_path_list)):
+            print_log(f"source_path_list[{i}] == {source_path_list[i]}")
+            print_log(f"os.path.isfile({source_path_list[i]}) == {os.path.isfile(source_path_list[i])}")
             if os.path.isfile(source_path_list[i]):
                 output_df.append(pd.DataFrame())
                 output_df[j] = pd.read_csv(source_path_list[i], na_filter=False)
@@ -117,6 +136,8 @@ def load_csv_files(source_path_list, config_yaml, header_list, nan_to_zero=True)
                     for col in output_df[j].columns:
                         output_df[j][col] = output_df[j][col].fillna(0)
                 output_header.append(header_list[i])
+                print_log(f"i == {i}, output_df == {output_df}")
+                print_log(f"i == {i}, output_header == {output_header}")
                 j = j + 1
         return output_df, output_header
     except Exception as err:
@@ -227,27 +248,27 @@ def merge_csv_files(d1_files, d2_files, m_files, tolerance):
                                                tolerance=tolerance, direction='nearest')
         j = 1 + len(d1_files) + len(m_files)
         for i in range(len(d2_files)):
-            print_log(f"{i}")
-            print_log(f"{i+j}")
-            print_log(f"{timestamps_indices.columns[j+i]}")
-            print_log(f"{len(d2_files[i].index)-1}")
+            print_log(f"1 {i}")
+            print_log(f"1 {i+j}")
+            print_log(f"1 {timestamps_indices.columns[j+i]}")
+            print_log(f"1 {len(d2_files[i].index)-1}")
             timestamps_indices[timestamps_indices.columns[j + i]] = timestamps_indices[
                 timestamps_indices.columns[j + i]].fillna(len(d2_files[i].index) - 1)
 
         j = 1
         for i in range(len(d1_files)):
-            print_log(f"{i}")
-            print_log(f"{i+j}")
-            print_log(f"{timestamps_indices.columns[i+j]}")
-            print_log(f"{timestamps_indices[timestamps_indices.columns[i+j]]}")
+            print_log(f"2 {i}")
+            print_log(f"2 {i+j}")
+            print_log(f"2 {timestamps_indices.columns[i+j]}")
+            print_log(f"2 {timestamps_indices[timestamps_indices.columns[i+j]]}")
             d1_files[i] = d1_files[i].iloc[timestamps_indices[timestamps_indices.columns[i + j]]]
         j = j + len(d1_files)
         for i in range(len(m_files)):
-            print_log(f"{i}")
+            print_log(f"3 {i}")
             m_files[i] = m_files[i].iloc[timestamps_indices[timestamps_indices.columns[i + j]]]
         j = j + len(m_files)
         for i in range(len(d2_files)):
-            print_log(f"{i}")
+            print_log(f"4 {i}")
             d2_files[i] = d2_files[i].iloc[timestamps_indices[timestamps_indices.columns[i + j]]]
 
         return d1_files, d2_files, m_files
@@ -651,6 +672,8 @@ def prepare_data_predict(source_path, dest_path, dest_path_predict_file, config_
             for ds in ast.literal_eval(config_yaml['input_data_sources']):
                 d2_headers.append(dm + "__" + ds)
                 d2_source_path_list.append(dest_path + "/" + dm + "__" + ds + ".csv")
+        print_log(f"d1_headers == {d1_headers}")
+        print_log(f"d2_headers == {d2_headers}")
 
         # m_source_path_list = list()
         # m_headers = list()
@@ -662,13 +685,17 @@ def prepare_data_predict(source_path, dest_path, dest_path_predict_file, config_
         d1_files, d1_headers = load_csv_files(d1_source_path_list, config_yaml, d1_headers, nan_to_zero=True)
         print_log(f"{currentFuncName()}: load_csv_files({d2_source_path_list}, {config_yaml}, {d2_headers})")
         d2_files, d2_headers = load_csv_files(d2_source_path_list, config_yaml, d2_headers, nan_to_zero=True)
+        print_log(f"d1_source_path_list == {d1_source_path_list}")
+        print_log(f"d2_source_path_list == {d2_source_path_list}")
+        print_log(f"d1_headers == {d1_headers}")
+        print_log(f"d2_headers == {d2_headers}")
         # print_log(f"{currentFuncName()}: load_csv_files({m_source_path_list}, {config_yaml}, {m_headers})")
         # m_files, m_headers = load_csv_files(m_source_path_list, config_yaml, m_headers, nan_to_zero=True)
 
         # merge_csv_dates
         d1_files, d2_files, m_files = merge_csv_files(d1_files, d2_files, [], config_yaml['time_tolerance'])
         print_log(f"d1_files[0].columns == {d1_files[0].columns}")
-        print_log(f"d2_files[0].columns == {d2_files[0].columns}")
+        #print_log(f"d2_files[0].columns == {d2_files[0].columns}")
         # print_log(f"m_files[0].columns == {m_files[0].columns}")
 
         d1_files_tmp, d2_files_tmp, m_files_tmp = list(), list(), list()
@@ -748,9 +775,18 @@ def prepare_data_predict(source_path, dest_path, dest_path_predict_file, config_
         #                                       threshold, val1, val2)
 
         # indices for train, test and validation
+        if d2_files_out == []:
+            print_log("d2_files_out == [   ]")
+            d2_files_out.append(d1_files_out[0])
+            print_log(f"d2_files_out == {d2_files_out}")
+
         print_log(f"d1_files_out == {d1_files_out}")
         print_log(f"d1_files_out[0] == {d1_files_out[0]}")
         print_log(f"d1_files_out[0]['timestamp'] == {d1_files_out[0]['timestamp']}")
+        print_log(f"type(d1_files_out) == {type(d1_files_out)}")
+        print_log(f"type(d1_files_out[0]) == {type(d1_files_out[0])}")
+        print_log(f"d1_files_out[0].columns.tolist()  == {d1_files_out[0].columns.tolist()}")
+        print_log(f"d2_files_out == {d2_files_out}")
         print_log(f"config_yaml['predict']['seasons'] == {config_yaml['predict']['seasons']}")
         predict_i = get_proper_dates_indices(d1_files_out[0]['timestamp'] / 1000, config_yaml['predict']['seasons'])
 
@@ -758,6 +794,8 @@ def prepare_data_predict(source_path, dest_path, dest_path_predict_file, config_
         headers_d1 = [[d1_headers[i], ] * len(d1_files_out[i].columns) for i in range(len(d1_headers))]
         predict_d2 = [d2_files_out[i].iloc[predict_i].reset_index(drop=True) for i in range(len(d2_files_out))]
         headers_d2 = [[d2_headers[i], ] * len(d2_files_out[i].columns) for i in range(len(d2_headers))]
+        #if headers_d2 == []:
+        #    headers_d2 = headers_d1
         headers = list()
 
         for i in range(len(headers_d1)):
@@ -766,7 +804,18 @@ def prepare_data_predict(source_path, dest_path, dest_path_predict_file, config_
             headers = headers + headers_d2[i]
 
         # save split data
+        print_log(f"predict_d1 == {predict_d1}")
+        print_log(f"headers_d1 == {headers_d1}")
+        print_log(f"predict_d2 == {predict_d2}")
+        print_log(f"headers_d2 == {headers_d2}")
+        print_log(f"d2_files_out == {d2_files_out}")
+        print_log(f"d1_files == {d1_files}")
+        print_log(f"d2_files == {d2_files}")
         predict = pd.concat(predict_d1 + predict_d2, axis=1)
+        print_log(f"predict.columns == {predict.columns}")
+        print_log(f"headers == {headers}")
+        print_log(f"len(predict.columns) == {len(predict.columns)}")
+        print_log(f"len(headers) == {len(headers)}")
         predict.columns = [headers, predict.columns]
         predict.to_csv(dest_path_predict_file, index=False)
     except Exception as err:
